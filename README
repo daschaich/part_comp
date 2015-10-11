@@ -1,0 +1,21 @@
+This is code for non-perturbative renormalization (NPR) of three-fermion
+operators in the regularization-independent momentum scheme (RI/MOM), using
+lattice gauge theory with domain wall fermions (DWF).
+
+Dependences:
+The USQCD SciDAC libraries QMP, QIO, QLA, QDP and QOPQDP
+The qcdlib library (http://lattice.bu.edu/qcdalg/qcdlib)
+LAPACK and BLAS are required by qcdlib
+FFTW, the "Fastest Fourier Transform in the West", at least v3.3.2
+
+Structure:
+The task is currently split up into two parts:
+1) invertAPBC is parallel code to carry out DWF inversions with anti-periodic
+   boundary conditions, saving to disk the resulting propagator and some
+   results from standard DWF measurements including the residual mass and axial
+   renormalization constant.
+2) process_prop is serial code that loads a saved propagator and carries out
+   the necessary contractions to carry out RI/MOM NPR for three-fermion
+   operators.  It is serial since it performs multi-dimensional Fourier
+   transforms from real space to momentum space and I've never been able to get
+   FFTW to run in parallel.
